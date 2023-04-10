@@ -17,8 +17,8 @@ def register(request):
 
 @login_required
 def profile(request):
-    user_form = UserUpdateForm
-    profile_form = ProfileUpdateForm
+    user_form = UserUpdateForm(instance=request.user)
+    profile_form = ProfileUpdateForm(instance=request.profile)
 
     # inject the forms into our profile template
     context = {
