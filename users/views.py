@@ -19,7 +19,7 @@ def register(request):
 def profile(request):
     if request.method == 'POST':
         user_form = UserUpdateForm(request.POST, instance=request.user)
-        profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.profile)
+        profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
 
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
@@ -28,7 +28,7 @@ def profile(request):
             return redirect('profile') # Performs a POST Get Redirect function
     else:
         user_form = UserUpdateForm(instance=request.user)
-        profile_form = ProfileUpdateForm(instance=request.profile)
+        profile_form = ProfileUpdateForm(instance=request.user.profile)
 
 
     # inject the forms into our profile template
