@@ -22,3 +22,5 @@ class Profile(models.Model):
             output_size = (300, 300)
             img.thumbnail(output_size)
             img.save(self.image.path)
+
+# TODO: Delete old images when user uploads a new profile picture
