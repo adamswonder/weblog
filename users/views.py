@@ -17,8 +17,18 @@ def register(request):
 
 @login_required
 def profile(request):
-    user_form = UserUpdateForm(instance=request.user)
-    profile_form = ProfileUpdateForm(instance=request.profile)
+    if request.method == 'POST':
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.profile)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, f'Your account has been updated!')
+    else:
+        user_form = UserUpdateForm(instance=request.user)
+        profile_form = ProfileUpdateForm(instance=request.profile)
+
 
     # inject the forms into our profile template
     context = {
