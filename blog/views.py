@@ -22,5 +22,10 @@ class PostCreateView(CreateView):
     model = Post
     fields = ['title', 'content']
 
+    # Overrides the parent form class
+    def form_valid(self, form):
+        form.instance.author = self.request.user # Here we set the author as current logged in user before validation is ran
+        return super().form_valid(form)
+
 def about(request):
     return render(request, 'blog/about.html', {'title': 'About'})
