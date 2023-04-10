@@ -36,7 +36,18 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def form_valid(self, form):
         form.instance.author = self.request.user # Here we set the author as current logged in user before validation is ran
         return super().form_valid(form)
+    
+    # check if current post has the current logged in user
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
 
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Post
+
+    # check if current post has the current logged in user
     def test_func(self):
         post = self.get_object()
         if self.request.user == post.author:
