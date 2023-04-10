@@ -1,3 +1,5 @@
+from tkinter import Image
+import PIL.Image # Lets you open image files
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -8,3 +10,15 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'{self.user.username} Profile'
+    
+    # overrides the parent save method
+    def save(self):
+        super().save()
+
+        img = PIL.Image.open(self.image.path) # type: ignore
+
+        # checks image dimensions 
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.image.path)
