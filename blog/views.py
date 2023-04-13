@@ -24,7 +24,7 @@ class UserPostListView(ListView):
     context_object_name = 'posts'
     paginate_by = 5
 
-    def get_query_set(self):
+    def get_queryset(self):
         user = get_list_or_404(User, username=self.kwargs.get('username')) #get username from url
         return Post.objects.filter(author=user).order_by('-date_posted') # retunrs specific user posts in desc order
 
