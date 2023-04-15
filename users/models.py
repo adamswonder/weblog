@@ -12,8 +12,8 @@ class Profile(models.Model):
         return f'{self.user.username} Profile'
     
     # overrides the parent save method
-    def save(self):
-        super().save()
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
 
         img = PIL.Image.open(self.image.path) # type: ignore
 
